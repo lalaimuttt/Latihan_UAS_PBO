@@ -7,27 +7,15 @@
 require_once 'Kamar.php';
 
 class KamarSuite extends Kamar {
-    // ========================================
-    // PROPERTI TAMBAHAN (Spesifik untuk Kamar Suite)
-    // ========================================
     private $minibarPaket;
     private $layananKonci;
 
-    // ========================================
-    // CONSTRUCTOR
-    // ========================================
     public function __construct($id_kamar, $nama_tamu, $tanggal_checkin, $lama_menginap, $hargaDasarKamar, $minibarPaket, $layananKonci) {
-        // Panggil constructor parent (Kamar)
         parent::__construct($id_kamar, $nama_tamu, $tanggal_checkin, $lama_menginap, $hargaDasarKamar);
-        
-        // Set properti tambahan
         $this->minibarPaket = $minibarPaket;
         $this->layananKonci = $layananKonci;
     }
 
-    // ========================================
-    // GETTER UNTUK PROPERTI TAMBAHAN
-    // ========================================
     public function getMinibarPaket() {
         return $this->minibarPaket;
     }
@@ -36,29 +24,23 @@ class KamarSuite extends Kamar {
         return $this->layananKonci;
     }
 
-    // ========================================
-    // IMPLEMENTASI METHOD ABSTRAK DARI PARENT
-    // ========================================
-    
-    /**
-     * Menghitung total harga untuk Kamar Suite
-     * Total = (lama_menginap * hargaDasarKamar) * 2.0
-     * Ada surcharge 100% (2x lipat) karena premium
-     */
+    // ============================================
+    // OVERRIDE METHOD hitungTotalHarga()
+    // Logika: (jumlah_hari * harga_dasar) * 2.0
+    // Surcharge premium 100% dari total harga dasar
+    // ============================================
     public function hitungTotalHarga() {
+        // Total = (jumlah_hari * harga_dasar) * 2.0
         return ($this->lama_menginap * $this->hargaDasarKamar) * 2.0;
     }
 
-    /**
-     * Menampilkan informasi fasilitas Kamar Suite
-     */
+    // ============================================
+    // OVERRIDE METHOD tampilkanInfoFasilitas()
+    // ============================================
     public function tampilkanInfoFasilitas() {
         return "🍾 Minibar: {$this->minibarPaket} | 🛎️ Layanan: {$this->layananKonci}";
     }
 
-    // ========================================
-    // METHOD TAMBAHAN (Opsional)
-    // ========================================
     public function getInfoLengkap() {
         return $this->tampilkanInfoDasar() . " | " . $this->tampilkanInfoFasilitas();
     }

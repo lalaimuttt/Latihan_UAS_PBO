@@ -7,27 +7,15 @@
 require_once 'Kamar.php';
 
 class KamarStandar extends Kamar {
-    // ========================================
-    // PROPERTI TAMBAHAN (Spesifik untuk Kamar Standar)
-    // ========================================
     private $tipeTV;
     private $lokasiLantai;
 
-    // ========================================
-    // CONSTRUCTOR
-    // ========================================
     public function __construct($id_kamar, $nama_tamu, $tanggal_checkin, $lama_menginap, $hargaDasarKamar, $tipeTV, $lokasiLantai) {
-        // Panggil constructor parent (Kamar)
         parent::__construct($id_kamar, $nama_tamu, $tanggal_checkin, $lama_menginap, $hargaDasarKamar);
-        
-        // Set properti tambahan
         $this->tipeTV = $tipeTV;
         $this->lokasiLantai = $lokasiLantai;
     }
 
-    // ========================================
-    // GETTER UNTUK PROPERTI TAMBAHAN
-    // ========================================
     public function getTipeTV() {
         return $this->tipeTV;
     }
@@ -36,28 +24,23 @@ class KamarStandar extends Kamar {
         return $this->lokasiLantai;
     }
 
-    // ========================================
-    // IMPLEMENTASI METHOD ABSTRAK DARI PARENT
-    // ========================================
-    
-    /**
-     * Menghitung total harga untuk Kamar Standar
-     * Total = lama_menginap * hargaDasarKamar (tanpa tambahan)
-     */
+    // ============================================
+    // OVERRIDE METHOD hitungTotalHarga()
+    // Logika: Tarif standar murni tanpa biaya tambahan
+    // ============================================
     public function hitungTotalHarga() {
+        // Total = jumlah_hari * harga_dasar
         return $this->lama_menginap * $this->hargaDasarKamar;
     }
 
-    /**
-     * Menampilkan informasi fasilitas Kamar Standar
-     */
+    // ============================================
+    // OVERRIDE METHOD tampilkanInfoFasilitas()
+    // ============================================
     public function tampilkanInfoFasilitas() {
         return "📺 TV: {$this->tipeTV} | 🏢 Lantai: {$this->lokasiLantai}";
     }
 
-    // ========================================
-    // METHOD TAMBAHAN (Opsional)
-    // ========================================
+    // Method tambahan untuk menampilkan detail lengkap
     public function getInfoLengkap() {
         return $this->tampilkanInfoDasar() . " | " . $this->tampilkanInfoFasilitas();
     }
